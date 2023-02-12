@@ -83,7 +83,7 @@ class Enemy(pygame.sprite.Sprite):
                 game.tiles.empty()
                 game.enemies.empty()
                 game.map, game.startPos, game.lowest = map_to_auto(game.map)
-                game.player.rect.y = game.startPos[1] - 800
+                game.player.rect.y = game.startPos[1] - 1000
                 game.player.rect.x = game.startPos[0]
                 game.lowest = generate_map(game.tiles, game.map, game.enemies, game)
             if shield.rect.colliderect(b.colrect):

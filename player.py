@@ -13,7 +13,7 @@ class Player:
         self.onground = False
         self.doublejump = False
 
-    def move(self, shield, tiles, screen):
+    def move(self, shield, tiles, screen, game):
         keys = pygame.key.get_pressed()
 
 
@@ -65,6 +65,22 @@ class Player:
                 t.rect.y += self.speed
             self.rect.y += self.speed
 
+        for t in tiles:
+            if t.rect.x > 2000:
+                self.rect.x = t.rect.x
+                #self.rect.y = t.rect.y
+                for tt in tiles:
+                    tt.rect.x -= 2000
+                self.rect.x -= 1500
+                break
+
+            if t.rect.x < -1000:
+                self.rect.x = t.rect.x
+
+                for tt in tiles:
+                    tt.rect.x += 2000
+                self.rect.x += 1500
+                break
 
         self.rect[0] += movement[0]
         for t in tiles:

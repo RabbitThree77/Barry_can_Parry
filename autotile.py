@@ -10,8 +10,6 @@ def map_to_auto(map):
             map2 = list(map)
             if map[x][y] == 4:
                 p = [y*50, x*50]
-                print(x)
-                print(y)
             try:
                 if map2[x-1][y] == 0 or map2[x-1][y] == 2 or map2[x-1][y] == 4:
                     if map2[x][y] == 1:
