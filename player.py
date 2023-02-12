@@ -117,7 +117,6 @@ class Shield:
         rad = math.atan2(mpos[1]-self.pos[1], mpos[0]-self.pos[0])
         self.rad = rad
         rad = round(rad * 180/math.pi)
-        print(rad)
 
 
         offset_rotated = self.offset.rotate(rad+90)

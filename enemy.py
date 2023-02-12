@@ -2,6 +2,25 @@ import sys
 
 import math
 import pygame
+from autotile import map_to_auto
+from tile import Tile, ImageTile
+
+def generate_map(group, map, engroup, game):
+    global lowest, t
+    for y,row in enumerate(map):
+        for x,tile in enumerate(row):
+            if tile == 1:
+                t = Tile((x*50,y*50), group)
+                lowest = t
+            elif tile == 2:
+                t = Enemy((x*50,y*50), engroup, group)
+                lowest = t
+            elif tile == 3:
+                t = ImageTile((x * 50, y * 50), group, 'grass.png')
+                lowest = t
+
+
+    return lowest
 
 
 class Bulllet(pygame.sprite.Sprite):
@@ -32,7 +51,7 @@ class Enemy(pygame.sprite.Sprite):
         self.tilegroup = tilegroup
         self.alive = True
 
-    def shoot(self, target, screen, shield, tiles, enemies, glbullets):
+    def shoot(self, target, screen, shield, tiles, enemies, glbullets, game):
         self.pos = self.rect.center
         self.shoottimer -= 1
         if self.shoottimer <= 0:
@@ -61,10 +80,12 @@ class Enemy(pygame.sprite.Sprite):
                 b.kill()
 
             if target.rect.colliderect(b.colrect):
-                pygame.time.delay(500)
-                print('dede')
-                pygame.quit()
-                sys.exit()
+                game.tiles.empty()
+                game.enemies.empty()
+                game.map, game.startPos, game.lowest = map_to_auto(game.map)
+                game.player.rect.y = game.startPos[1] - 800
+                game.player.rect.x = game.startPos[0]
+                game.lowest = generate_map(game.tiles, game.map, game.enemies, game)
             if shield.rect.colliderect(b.colrect):
                 b.deflected = True
                 mpos = pygame.mouse.get_pos()
