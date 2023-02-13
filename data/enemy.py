@@ -2,8 +2,8 @@ import sys
 
 import math
 import pygame
-from autotile import map_to_auto
-from tile import Tile, ImageTile
+from data.autotile import map_to_auto
+from data.tile import Tile, ImageTile
 
 def generate_map(group, map, engroup, game):
     global lowest, t
@@ -16,7 +16,7 @@ def generate_map(group, map, engroup, game):
                 t = Enemy((x*50,y*50), engroup, group)
                 lowest = t
             elif tile == 3:
-                t = ImageTile((x * 50, y * 50), group, 'grass.png')
+                t = ImageTile((x * 50, y * 50), group, 'data/grass.png')
                 lowest = t
 
 
@@ -41,7 +41,7 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, group, tilegroup):
         super().__init__()
         self.pos = pos
-        self.image = pygame.image.load('enemy.png').convert_alpha()
+        self.image = pygame.image.load('data/enemy.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (50, 50))
         self.rect = self.image.get_rect(topleft=pos)
         group.add(self)
@@ -106,8 +106,8 @@ class Enemy(pygame.sprite.Sprite):
                 b.kill()
 
             if self.rect.colliderect(b.rect) and b.deflected:
-                game.score += math.hypot(target.rect.centery - self.rect.centery,
-                                         target.rect.centerx - self.rect.centerx)
+                game.score += int(math.hypot(target.rect.centery - self.rect.centery,
+                                         target.rect.centerx - self.rect.centerx))
                 b.kill()
                 for b in self.bullets:
                     b.kill()
@@ -121,8 +121,8 @@ class Enemy(pygame.sprite.Sprite):
 
         for gb in glbullets:
             if self.rect.colliderect(gb.rect) and gb.deflected:
-                game.score += math.hypot(target.rect.centery - self.rect.centery,
-                                         target.rect.centerx - self.rect.centerx)
+                game.score += int(math.hypot(target.rect.centery - self.rect.centery,
+                                         target.rect.centerx - self.rect.centerx))
                 gb.kill()
                 for b in self.bullets:
                     b.kill()

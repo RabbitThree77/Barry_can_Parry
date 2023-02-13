@@ -1,10 +1,10 @@
 import sys
 
 import pygame
-from player import Shield, Player
-from Generate_Map import generate_map
-from autotile import map_to_auto
-from settings import *
+from data.player import Shield, Player
+from data.Generate_Map import generate_map
+from data.autotile import map_to_auto
+from data.settings import *
 
 class Game:
     def __init__(self):
@@ -22,6 +22,10 @@ class Game:
         self.map = MAPS[self.mapid]
         self.score = 0
 
+        self.font = pygame.font.Font('data/Minecraft.ttf', 32)
+        self.scoretext = self.font.render(f'score: {str(self.score)}', True, 'black')
+        self.stextrect = self.scoretext.get_rect(topleft = (0,0))
+
 
 
         self.map, self.startPos, self.lowest = map_to_auto(self.map)
@@ -34,6 +38,7 @@ class Game:
         self.screen.blit(self.player.image, self.player.rect)
         self.tiles.draw(self.screen)
         self.screen.blit(self.pshield.image, self.pshield.rect)
+        self.screen.blit(self.scoretext, self.stextrect)
 
 
 
@@ -41,7 +46,7 @@ class Game:
         run = True
         while run:
             #print(self.pshield.rad)
-            print(int(self.score))
+            self.scoretext = self.font.render(f'score: {str(self.score)}', True, 'black')
             if self.score < 0:
                 self.score = 0
             if len(self.enemies) <= 0:
@@ -50,6 +55,7 @@ class Game:
                     self.map = MAPS[self.mapid]
                 except:
                     print('you win')
+                    print(f'final score: {self.score}')
                     pygame.quit()
                     sys.exit()
                 self.tiles.empty()

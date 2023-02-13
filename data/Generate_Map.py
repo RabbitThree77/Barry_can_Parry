@@ -1,5 +1,5 @@
-from enemy import Enemy
-from tile import Tile, ImageTile
+from data.enemy import Enemy
+from data.tile import Tile, ImageTile
 
 def generate_map(group, map, engroup, game):
     global lowest, t
@@ -12,7 +12,7 @@ def generate_map(group, map, engroup, game):
                 t = Enemy((x*50,y*50), engroup, group)
                 lowest = t
             elif tile == 3:
-                t = ImageTile((x * 50, y * 50), group, 'grass.png')
+                t = ImageTile((x * 50, y * 50), group, 'data/grass.png')
                 lowest = t
 
 
