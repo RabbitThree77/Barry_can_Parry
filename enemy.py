@@ -80,6 +80,7 @@ class Enemy(pygame.sprite.Sprite):
                 b.kill()
 
             if target.rect.colliderect(b.colrect):
+                game.score -= 1000
                 game.tiles.empty()
                 game.enemies.empty()
                 game.map, game.startPos, game.lowest = map_to_auto(game.map)
@@ -105,6 +106,8 @@ class Enemy(pygame.sprite.Sprite):
                 b.kill()
 
             if self.rect.colliderect(b.rect) and b.deflected:
+                game.score += math.hypot(target.rect.centery - self.rect.centery,
+                                         target.rect.centerx - self.rect.centerx)
                 b.kill()
                 for b in self.bullets:
                     b.kill()
@@ -118,6 +121,8 @@ class Enemy(pygame.sprite.Sprite):
 
         for gb in glbullets:
             if self.rect.colliderect(gb.rect) and gb.deflected:
+                game.score += math.hypot(target.rect.centery - self.rect.centery,
+                                         target.rect.centerx - self.rect.centerx)
                 gb.kill()
                 for b in self.bullets:
                     b.kill()

@@ -20,6 +20,7 @@ class Game:
         self.gloabalBullets = pygame.sprite.Group()
         self.mapid = 0
         self.map = MAPS[self.mapid]
+        self.score = 0
 
 
 
@@ -40,6 +41,9 @@ class Game:
         run = True
         while run:
             #print(self.pshield.rad)
+            print(int(self.score))
+            if self.score < 0:
+                self.score = 0
             if len(self.enemies) <= 0:
                 try:
                     self.mapid += 1
@@ -59,7 +63,7 @@ class Game:
             #print(self.player.rect.y)
             if self.lowest.rect.y < 0:
                 for t in self.tiles:
-                    t.rect.y += self.player.rect.y + 3000
+                    t.rect.y += len(MAPS[self.mapid]) * 50 + 700
 
                 # self.player.rect.y = self.startPos[1] - 800
                 # self.player.rect.x = self.startPos[0]
